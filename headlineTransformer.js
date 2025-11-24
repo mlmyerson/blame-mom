@@ -107,8 +107,8 @@ class HeadlineTransformer {
     }
     
     // Check for "X linked to Y" pattern
-    if (content.match(/(.+?)\s+linked to\s+(.+)/i)) {
-      const linkMatch = content.match(/(.+?)\s+linked to\s+(.+)/i);
+    const linkMatch = content.match(/(.+?)\s+linked to\s+(.+)/i);
+    if (linkMatch) {
       return `linked her ${linkMatch[1]} to ${linkMatch[2]}`;
     }
     

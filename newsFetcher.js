@@ -17,12 +17,12 @@ class NewsFetcher {
     this.sources = [
       {
         name: 'BBC News',
-        url: 'http://feeds.bbci.co.uk/news/rss.xml',
+        url: 'https://feeds.bbci.co.uk/news/rss.xml',
         category: 'world'
       },
       {
         name: 'BBC Science',
-        url: 'http://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
+        url: 'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
         category: 'science'
       },
       {

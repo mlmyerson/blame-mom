@@ -88,6 +88,14 @@ app.get('/api/headlines', async (req, res) => {
 app.get('/api/random', async (req, res) => {
   try {
     const headlines = await getHeadlines();
+    
+    if (headlines.length === 0) {
+      return res.json({
+        success: false,
+        error: 'No headlines available at the moment'
+      });
+    }
+    
     const suitableHeadlines = headlines.filter(h => h.suitable);
     
     if (suitableHeadlines.length === 0) {

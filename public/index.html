@@ -232,6 +232,13 @@
         let currentMode = 'random';
         let allHeadlines = [];
 
+        // HTML escape function to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         async function loadHeadline() {
             const contentDiv = document.getElementById('content');
             const loadBtn = document.getElementById('loadBtn');
@@ -285,14 +292,14 @@
                 <div class="headline-card">
                     <div class="headline-original">
                         <div class="headline-label">Original Headline:</div>
-                        ${headline.original.title}
+                        ${escapeHtml(headline.original.title)}
                     </div>
                     <div class="headline-transformed">
-                        ${headline.transformed}
+                        ${escapeHtml(headline.transformed)}
                     </div>
                     <div class="headline-meta">
-                        <span class="source">Source: ${headline.original.source}</span>
-                        ${headline.original.link ? `<a href="${headline.original.link}" target="_blank" class="link">Read Original →</a>` : ''}
+                        <span class="source">Source: ${escapeHtml(headline.original.source)}</span>
+                        ${headline.original.link ? `<a href="${escapeHtml(headline.original.link)}" target="_blank" rel="noopener noreferrer" class="link">Read Original →</a>` : ''}
                     </div>
                 </div>
             `;
@@ -310,14 +317,14 @@
                 <div class="headline-card">
                     <div class="headline-original">
                         <div class="headline-label">Original Headline:</div>
-                        ${headline.original.title}
+                        ${escapeHtml(headline.original.title)}
                     </div>
                     <div class="headline-transformed">
-                        ${headline.transformed}
+                        ${escapeHtml(headline.transformed)}
                     </div>
                     <div class="headline-meta">
-                        <span class="source">Source: ${headline.original.source}</span>
-                        ${headline.original.link ? `<a href="${headline.original.link}" target="_blank" class="link">Read Original →</a>` : ''}
+                        <span class="source">Source: ${escapeHtml(headline.original.source)}</span>
+                        ${headline.original.link ? `<a href="${escapeHtml(headline.original.link)}" target="_blank" rel="noopener noreferrer" class="link">Read Original →</a>` : ''}
                     </div>
                 </div>
             `).join('');
