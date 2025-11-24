@@ -8,12 +8,18 @@
     "dev": "node server.js",
     "test": "jest"
   },
-  "keywords": ["satire", "news", "humor", "headlines"],
+  "keywords": [
+    "satire",
+    "news",
+    "humor",
+    "headlines"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.13.2",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
