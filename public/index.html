@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blame Mom - It's Always Mom's Fault!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .headline-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .headline-original {
+            font-size: 0.9em;
+            color: #666;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .headline-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .headline-transformed {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .headline-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .source {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .link {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+
+        .error {
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .headlines-list {
+            margin-top: 40px;
+        }
+
+        .view-mode {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .view-mode button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 0.9em;
+        }
+
+        .view-mode button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .headline-transformed {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤦 Blame Mom 🤦</h1>
+            <p class="tagline">Because everything is definitely your mother's fault!</p>
+        </header>
+
+        <div class="disclaimer">
+            <strong>⚠️ Satirical Content Warning ⚠️</strong><br>
+            This site is 100% satirical. Real news headlines are transformed for comedic purposes only. 
+            We love all moms! Please don't take this seriously.
+        </div>
+
+        <div class="view-mode">
+            <button id="randomBtn" class="active">Random Headline</button>
+            <button id="allBtn">All Headlines</button>
+        </div>
+
+        <div class="controls">
+            <button id="loadBtn" onclick="loadHeadline()">
+                Generate New Headline
+            </button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        let currentMode = 'random';
+        let allHeadlines = [];
+
+        // HTML escape function to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function loadHeadline() {
+            const contentDiv = document.getElementById('content');
+            const loadBtn = document.getElementById('loadBtn');
+            
+            loadBtn.disabled = true;
+            contentDiv.innerHTML = '<div class="loading">Loading headlines...</div>';
+
+            try {
+                const response = await fetch('/api/random');
+                const data = await response.json();
+
+                if (data.success && data.headline) {
+                    displayHeadline(data.headline);
+                } else {
+                    throw new Error('Failed to load headline');
+                }
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="error">Error loading headlines: ${error.message}</div>`;
+            } finally {
+                loadBtn.disabled = false;
+            }
+        }
+
+        async function loadAllHeadlines() {
+            const contentDiv = document.getElementById('content');
+            const loadBtn = document.getElementById('loadBtn');
+            
+            loadBtn.disabled = true;
+            contentDiv.innerHTML = '<div class="loading">Loading all headlines...</div>';
+
+            try {
+                const response = await fetch('/api/headlines?limit=50&suitable=true');
+                const data = await response.json();
+
+                if (data.success && data.headlines) {
+                    allHeadlines = data.headlines;
+                    displayAllHeadlines(data.headlines);
+                } else {
+                    throw new Error('Failed to load headlines');
+                }
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="error">Error loading headlines: ${error.message}</div>`;
+            } finally {
+                loadBtn.disabled = false;
+            }
+        }
+
+        function displayHeadline(headline) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = `
+                <div class="headline-card">
+                    <div class="headline-original">
+                        <div class="headline-label">Original Headline:</div>
+                        ${escapeHtml(headline.original.title)}
+                    </div>
+                    <div class="headline-transformed">
+                        ${escapeHtml(headline.transformed)}
+                    </div>
+                    <div class="headline-meta">
+                        <span class="source">Source: ${escapeHtml(headline.original.source)}</span>
+                        ${headline.original.link ? `<a href="${escapeHtml(headline.original.link)}" target="_blank" rel="noopener noreferrer" class="link">Read Original →</a>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayAllHeadlines(headlines) {
+            const contentDiv = document.getElementById('content');
+            
+            if (headlines.length === 0) {
+                contentDiv.innerHTML = '<div class="error">No headlines available at the moment. Try again later!</div>';
+                return;
+            }
+
+            const headlinesHTML = headlines.map(headline => `
+                <div class="headline-card">
+                    <div class="headline-original">
+                        <div class="headline-label">Original Headline:</div>
+                        ${escapeHtml(headline.original.title)}
+                    </div>
+                    <div class="headline-transformed">
+                        ${escapeHtml(headline.transformed)}
+                    </div>
+                    <div class="headline-meta">
+                        <span class="source">Source: ${escapeHtml(headline.original.source)}</span>
+                        ${headline.original.link ? `<a href="${escapeHtml(headline.original.link)}" target="_blank" rel="noopener noreferrer" class="link">Read Original →</a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            contentDiv.innerHTML = `<div class="headlines-list">${headlinesHTML}</div>`;
+        }
+
+        // View mode switching
+        document.getElementById('randomBtn').addEventListener('click', function() {
+            currentMode = 'random';
+            this.classList.add('active');
+            document.getElementById('allBtn').classList.remove('active');
+            document.getElementById('loadBtn').textContent = 'Generate New Headline';
+            loadHeadline();
+        });
+
+        document.getElementById('allBtn').addEventListener('click', function() {
+            currentMode = 'all';
+            this.classList.add('active');
+            document.getElementById('randomBtn').classList.remove('active');
+            document.getElementById('loadBtn').textContent = 'Load All Headlines';
+            loadAllHeadlines();
+        });
+
+        // Update load button behavior
+        document.getElementById('loadBtn').onclick = function() {
+            if (currentMode === 'random') {
+                loadHeadline();
+            } else {
+                loadAllHeadlines();
+            }
+        };
+
+        // Load initial headline
+        loadHeadline();
+    </script>
+</body>
+</html>
