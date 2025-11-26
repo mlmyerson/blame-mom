@@ -3,124 +3,191 @@ import './App.css'
 import { fetchHeadlines, fetchRandomHeadline } from './api'
 import type { TransformedHeadline } from './types'
 
-type ViewMode = 'random' | 'all'
+type CardVariant = 'hero' | 'secondary' | 'grid' | 'outrage'
 
-function formatHeadlineText(headline: TransformedHeadline) {
-  const lines = [`ORIGINAL: ${headline.original.title}`]
+const datelineFormatter = new Intl.DateTimeFormat(undefined, {
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+})
 
-  if (headline.original.summary || headline.original.description) {
-    lines.push(`SUMMARY: ${headline.original.summary || headline.original.description}`)
-  }
+const articleDateFormatter = new Intl.DateTimeFormat(undefined, {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+})
 
-  lines.push(`BLAME MOM: ${headline.transformed}`)
+function formatArticleDate(value?: string) {
+  if (!value) return null
+  const parsed = new Date(value)
+  if (Number.isNaN(parsed.getTime())) return null
+  return articleDateFormatter.format(parsed)
+}
 
-  if (headline.original.source) {
-    lines.push(`SOURCE: ${headline.original.source}${headline.original.link ? ` (${headline.original.link})` : ''}`)
-  } else if (headline.original.link) {
-    lines.push(`SOURCE: ${headline.original.link}`)
-  }
+type ArticleCardProps = {
+  headline: TransformedHeadline
+  variant?: CardVariant
+}
 
-  return lines.join('\n')
+function ArticleCard({ headline, variant = 'grid' }: ArticleCardProps) {
+  const summary = headline.original.summary || headline.original.description || 'Details remain sketchy.'
+  const sourceLine = [headline.original.source, headline.original.category].filter(Boolean).join(' | ')
+  const published = formatArticleDate(headline.original.publishedAt) || 'Today'
+
+  return (
+    <article className={`article-card ${variant}`}>
+      <p className="kicker">{headline.original.source || 'Staff Wire'}</p>
+      <h2>{headline.transformed}</h2>
+      <p className="summary">{summary}</p>
+      <p className="original">"{headline.original.title}"</p>
+      <div className="meta">
+        <span>
+          {sourceLine && <>{sourceLine} &middot; </>}
+          {published}
+        </span>
+        {headline.original.link && (
+          <a href={headline.original.link} target="_blank" rel="noreferrer">
+            Read original
+          </a>
+        )}
+      </div>
+    </article>
+  )
 }
 
 function App() {
-  const [viewMode, setViewMode] = useState<ViewMode>('random')
-  const [loading, setLoading] = useState(false)
+  const [headlines, setHeadlines] = useState<TransformedHeadline[]>([])
+  const [dailyFeature, setDailyFeature] = useState<TransformedHeadline | null>(null)
+  const [loadingHeadlines, setLoadingHeadlines] = useState(false)
+  const [loadingOutrage, setLoadingOutrage] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [randomHeadline, setRandomHeadline] = useState<TransformedHeadline | null>(null)
-  const [allHeadlines, setAllHeadlines] = useState<TransformedHeadline[]>([])
 
-  const actionLabel = viewMode === 'random' ? 'Generate New Headline' : 'Load All Headlines'
-
-  const hasData = viewMode === 'random' ? Boolean(randomHeadline) : allHeadlines.length > 0
-
-  const loadData = useCallback(async (mode: ViewMode) => {
-    setLoading(true)
+  const loadHeadlines = useCallback(async () => {
+    setLoadingHeadlines(true)
     setError(null)
 
     try {
-      if (mode === 'random') {
-        const headline = await fetchRandomHeadline()
-        setRandomHeadline(headline)
-      } else {
-        const headlines = await fetchHeadlines(50, true)
-        setAllHeadlines(headlines)
-      }
+      const items = await fetchHeadlines(60, true)
+      setHeadlines(items)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Something went wrong'
       setError(message)
     } finally {
-      setLoading(false)
+      setLoadingHeadlines(false)
+    }
+  }, [])
+
+  const loadDailyFeature = useCallback(async () => {
+    setLoadingOutrage(true)
+    try {
+      const item = await fetchRandomHeadline()
+      setDailyFeature(item)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to fetch headline'
+      setError(message)
+    } finally {
+      setLoadingOutrage(false)
     }
   }, [])
 
   useEffect(() => {
-    void loadData(viewMode)
-  }, [loadData, viewMode])
+    void loadHeadlines()
+    void loadDailyFeature()
+  }, [loadHeadlines, loadDailyFeature])
+
+  const primary = headlines[0]
+  const secondary = headlines.slice(1, 3)
+  const gridHeadlines = headlines.slice(3)
+  const ticker = headlines.slice(0, 6)
+
+  const dateline = datelineFormatter.format(new Date())
 
   return (
-    <div className="app">
-      <header className="hero">
-        <h1>Blame Mom</h1>
-        <p className="tagline">Because everything is definitely your mother&apos;s fault!</p>
+    <div className="paper">
+      <header className="masthead">
+        <div>
+          <p className="edition">Volume 1 · Issue 42</p>
+          <h1>The Daily Blame</h1>
+          <p className="motto">We report, mom retorts.</p>
+        </div>
+        <div className="dateline">{dateline}</div>
       </header>
 
-      <section className="disclaimer">
-        <strong>Satirical Content Warning</strong>
-        <p>
-          This site is 100% satirical. Real news headlines are transformed for comedic purposes only. We love all
-          moms! Please don&apos;t take this seriously.
-        </p>
-      </section>
+      <nav className="section-nav">
+        <span>World</span>
+        <span>Science</span>
+        <span>Society</span>
+        <span>Economy</span>
+        <span>Climate</span>
+        <span>Opinion</span>
+        <span>Letters</span>
+      </nav>
 
-      <section className="view-mode">
-        <button
-          className={viewMode === 'random' ? 'toggle active' : 'toggle'}
-          onClick={() => setViewMode('random')}
-          disabled={loading && viewMode !== 'random'}
-        >
-          Random Headline
+      <div className="ticker">
+        <span className="ticker-label">Breaking</span>
+        <div className="ticker-items">
+          {ticker.length > 0
+            ? ticker.map((item) => (
+                <span key={item.original.link ?? `${item.original.title}-${item.transformed}`}>{item.original.title}</span>
+              ))
+            : 'Gathering headlines...'}
+        </div>
+      </div>
+
+      <div className="controls-row">
+        <button onClick={loadHeadlines} disabled={loadingHeadlines}>
+          {loadingHeadlines ? 'Refreshing headlines...' : 'Refresh headlines'}
         </button>
-        <button
-          className={viewMode === 'all' ? 'toggle active' : 'toggle'}
-          onClick={() => setViewMode('all')}
-          disabled={loading && viewMode !== 'all'}
-        >
-          All Headlines
+        <button onClick={loadDailyFeature} disabled={loadingOutrage}>
+          {loadingOutrage ? 'Spinning outrage...' : 'New outrage'}
         </button>
-      </section>
+      </div>
 
-      <section className="controls">
-        <button className="cta" onClick={() => loadData(viewMode)} disabled={loading}>
-          {loading ? 'Loading...' : actionLabel}
-        </button>
-      </section>
+      {error && <div className="notice error">{error}</div>}
+      {loadingHeadlines && !headlines.length && <div className="notice">Fetching headlines...</div>}
 
-      {error && <div className="banner error">{error}</div>}
-      {loading && <div className="banner loading">Fetching headlines...</div>}
+      <main className="layout">
+        <section className="feature-grid">
+          {primary ? <ArticleCard headline={primary} variant="hero" /> : <p className="placeholder">Headline press is warming up...</p>}
 
-      {!loading && !error && (
-        <section className="content">
-          {viewMode === 'random' && randomHeadline && (
-            <pre className="text-block">{formatHeadlineText(randomHeadline)}</pre>
-          )}
-
-          {viewMode === 'all' && allHeadlines.length > 0 && (
-            <div className="text-list">
-              {allHeadlines.map((headline) => (
-                <pre
-                  key={headline.original.link ?? `${headline.original.title}-${headline.transformed}`}
-                  className="text-block"
-                >
-                  {formatHeadlineText(headline)}
-                </pre>
-              ))}
-            </div>
-          )}
-
-          {!hasData && <p className="empty-state">No headlines available right now. Try again in a moment!</p>}
+          <div className="feature-side">
+            {secondary.map((story) => (
+              <ArticleCard
+                key={story.original.link ?? `${story.original.title}-${story.transformed}`}
+                headline={story}
+                variant="secondary"
+              />
+            ))}
+          </div>
         </section>
-      )}
+
+        <section className="daily-outrage">
+          <div className="section-header">
+            <h3>Daily Outrage</h3>
+            <p>One random catastrophe mom apparently caused.</p>
+          </div>
+          {dailyFeature ? (
+            <ArticleCard headline={dailyFeature} variant="outrage" />
+          ) : (
+            <p className="placeholder">Summoning today&apos;s outrage...</p>
+          )}
+        </section>
+
+        <section className="article-grid">
+          {gridHeadlines.map((story) => (
+            <ArticleCard
+              key={story.original.link ?? `${story.original.title}-${story.transformed}`}
+              headline={story}
+              variant="grid"
+            />
+          ))}
+        </section>
+      </main>
+
+      <footer className="footer">
+        <p>Satire notice: real headlines, unreal accusations. We love all moms.</p>
+      </footer>
     </div>
   )
 }

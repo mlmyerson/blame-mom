@@ -1,16 +1,17 @@
 :root {
-  font-family: 'Georgia', serif;
-  line-height: 1.5;
+  font-family: 'Times New Roman', Georgia, serif;
+  line-height: 1.6;
   font-weight: 400;
-  color: #111;
+  color: #1f1c18;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  background-color: #d9c9b2;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: radial-gradient(circle at top, #f2eadc 0%, #d9c9b2 55%, #c0b19a 100%);
 }
 
 a {
