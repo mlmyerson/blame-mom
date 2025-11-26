@@ -32,24 +32,34 @@ cd blame-mom
 
 2. Install dependencies:
 ```bash
+# Install API/server dependencies
 npm install
+
+# Install the React/Vite frontend dependencies
+npm install --prefix app
 ```
 
-3. Start the server:
+3. Start both the Express API (port 3000) and the Vite dev server (port 5173) with a single command:
 ```bash
-npm start
+npm run dev
 ```
 
-4. Open your browser and navigate to:
+That script runs the API and the Vite dev server concurrently. Open the app at:
 ```
-http://localhost:3000
+http://localhost:5173
 ```
+
+For production builds, compile the frontend once with:
+```bash
+npm run build
+```
+The Express server will automatically serve the generated files from `app/dist`.
 
 ## Usage
 
 ### Web Interface
 
-Simply visit the homepage and click "Generate New Headline" to see a random transformed headline. You can also view all available headlines at once.
+Visit the React app (either the Vite dev server during development or the Express server after building) and click "Generate New Headline" to see a random transformed headline. Switch to "All Headlines" to load a batch of suitable headlines at once.
 
 ### API Endpoints
 
@@ -98,13 +108,16 @@ npm test
 
 ```
 blame-mom/
-├── server.js              # Express server and API routes
-├── headlineTransformer.js # Core transformation logic
-├── newsFetcher.js        # RSS feed fetching
-├── public/
-│   └── index.html        # Web interface
-├── package.json          # Dependencies and scripts
-└── README.md            # Documentation
+├── server.js               # Express server and API routes
+├── headlineTransformer.js  # Core transformation logic
+├── newsFetcher.js          # RSS feed fetching
+├── app/                    # React + Vite frontend
+│   ├── src/                # React components, styles, hooks
+│   ├── public/             # Static assets for Vite build
+│   └── vite.config.ts      # Vite configuration with API proxy
+├── public/                 # Legacy static fallback (used if React build is missing)
+├── package.json            # Backend dependencies and helper scripts
+└── README.md               # Documentation
 ```
 
 ## How It Works

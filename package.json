@@ -5,8 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
-    "test": "jest"
+    "server": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client:dev\"",
+    "test": "jest",
+    "client:dev": "npm run dev --prefix app",
+    "client:build": "npm run build --prefix app",
+    "client:preview": "npm run preview --prefix app",
+    "build": "npm run client:build"
   },
   "keywords": [
     "satire",
@@ -23,6 +28,7 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "jest": "^30.2.0"
   }
 }

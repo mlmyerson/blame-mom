@@ -4,6 +4,7 @@
  */
 
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const HeadlineTransformer = require('./headlineTransformer');
@@ -23,10 +24,17 @@ const apiLimiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 
+const CLIENT_DIST_PATH = path.join(__dirname, 'app', 'dist');
+const LEGACY_PUBLIC_PATH = path.join(__dirname, 'public');
+const STATIC_ASSET_PATH = fs.existsSync(CLIENT_DIST_PATH) ? CLIENT_DIST_PATH : LEGACY_PUBLIC_PATH;
+
+if (STATIC_ASSET_PATH === LEGACY_PUBLIC_PATH) {
+  console.warn('Serving legacy static assets. Run "npm run build --prefix app" to serve the React build.');
+}
+
 // Middleware
 app.use(express.json());
 app.use('/api/', apiLimiter);
-app.use(express.static('public'));
 
 // Cache for headlines (refresh every 30 minutes)
 let cachedHeadlines = [];
@@ -179,9 +187,15 @@ app.get('/api/refresh', async (req, res) => {
   }
 });
 
-// Serve main page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Serve the React build (or fallback static) for non-API routes
+app.use(express.static(STATIC_ASSET_PATH));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    return next();
+  }
+
+  res.sendFile(path.join(STATIC_ASSET_PATH, 'index.html'));
 });
 
 // Initialize and start server
