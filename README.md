@@ -32,12 +32,13 @@ cd blame-mom
 
 2. Install dependencies:
 ```bash
-# Install API/server dependencies
 npm install
 
 # Install the React/Vite frontend dependencies
 npm install --prefix app
 ```
+
+No API keys or configuration files are required—the app ships with RSS feeds from BBC, Reuters, NPR, and AP baked in.
 
 3. Start both the Express API (port 3000) and the Vite dev server (port 5173) with a single command:
 ```bash
@@ -59,7 +60,7 @@ The Express server will automatically serve the generated files from `app/dist`.
 
 ### Web Interface
 
-Visit the React app (either the Vite dev server during development or the Express server after building) and click "Generate New Headline" to see a random transformed headline. Switch to "All Headlines" to load a batch of suitable headlines at once.
+Visit the React app (either the Vite dev server during development or the Express server after building) and use the buttons to fetch data. For debugging purposes, the UI simply dumps the headline text, summary, and transformed output in plain text. "Generate New Headline" requests one random entry, while "All Headlines" loads a batch.
 
 ### API Endpoints
 
@@ -122,7 +123,7 @@ blame-mom/
 
 ## How It Works
 
-1. **News Fetching**: The `newsFetcher.js` module periodically fetches headlines from RSS feeds of trustworthy news sources.
+1. **News Fetching**: The `newsFetcher.js` module pulls from a curated list of RSS feeds (BBC, Reuters, NPR, AP, etc.), normalizes each item, and deduplicates the results.
 
 2. **Transformation**: The `headlineTransformer.js` module uses pattern matching to:
    - Identify the structure of the headline

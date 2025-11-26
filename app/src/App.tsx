@@ -1,10 +1,27 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import { fetchHeadlines, fetchRandomHeadline } from './api'
-import HeadlineCard from './components/HeadlineCard'
 import type { TransformedHeadline } from './types'
 
 type ViewMode = 'random' | 'all'
+
+function formatHeadlineText(headline: TransformedHeadline) {
+  const lines = [`ORIGINAL: ${headline.original.title}`]
+
+  if (headline.original.summary || headline.original.description) {
+    lines.push(`SUMMARY: ${headline.original.summary || headline.original.description}`)
+  }
+
+  lines.push(`BLAME MOM: ${headline.transformed}`)
+
+  if (headline.original.source) {
+    lines.push(`SOURCE: ${headline.original.source}${headline.original.link ? ` (${headline.original.link})` : ''}`)
+  } else if (headline.original.link) {
+    lines.push(`SOURCE: ${headline.original.link}`)
+  }
+
+  return lines.join('\n')
+}
 
 function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('random')
@@ -84,15 +101,19 @@ function App() {
 
       {!loading && !error && (
         <section className="content">
-          {viewMode === 'random' && randomHeadline && <HeadlineCard headline={randomHeadline} />}
+          {viewMode === 'random' && randomHeadline && (
+            <pre className="text-block">{formatHeadlineText(randomHeadline)}</pre>
+          )}
 
           {viewMode === 'all' && allHeadlines.length > 0 && (
-            <div className="headlines-list">
+            <div className="text-list">
               {allHeadlines.map((headline) => (
-                <HeadlineCard
+                <pre
                   key={headline.original.link ?? `${headline.original.title}-${headline.transformed}`}
-                  headline={headline}
-                />
+                  className="text-block"
+                >
+                  {formatHeadlineText(headline)}
+                </pre>
               ))}
             </div>
           )}

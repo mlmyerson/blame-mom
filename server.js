@@ -190,11 +190,7 @@ app.get('/api/refresh', async (req, res) => {
 // Serve the React build (or fallback static) for non-API routes
 app.use(express.static(STATIC_ASSET_PATH));
 
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api/')) {
-    return next();
-  }
-
+app.get(/^(?!\/api\/).*/, (req, res) => {
   res.sendFile(path.join(STATIC_ASSET_PATH, 'index.html'));
 });
 

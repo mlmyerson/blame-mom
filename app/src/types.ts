@@ -4,6 +4,7 @@ export type HeadlineSource = {
   source?: string
   category?: string
   publishedAt?: string
+  summary?: string
   description?: string
 }
 

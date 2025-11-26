@@ -130,9 +130,21 @@
   margin-top: 16px;
 }
 
-.headlines-list {
+.text-list {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+}
+
+.text-block {
+  white-space: pre-wrap;
+  background: #1a202c;
+  color: #f7fafc;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .empty-state {
