@@ -7,6 +7,7 @@ const express = require('express');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const HeadlineTransformer = require('./headlineTransformer');
+const FunnyGenerator = require('./funnyGenerator');
 const NewsFetcher = require('./newsFetcher');
 
 const app = express();
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 // Initialize modules
 const transformer = new HeadlineTransformer();
+const funnyGenerator = new FunnyGenerator();
 const fetcher = new NewsFetcher();
 
 // Rate limiting middleware
@@ -39,11 +41,31 @@ const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 async function refreshHeadlines() {
   try {
     const headlines = await fetcher.fetchAll();
-    cachedHeadlines = headlines.map(headline => ({
-      original: headline,
-      transformed: transformer.transform(headline.title),
-      suitable: transformer.isSuitableForTransformation(headline.title)
-    }));
+    cachedHeadlines = headlines.map(headline => {
+      // 1. Try Regex Transform
+      let transformedTitle = transformer.transform(headline.title);
+      let isSuitable = transformer.isSuitableForTransformation(headline.title);
+
+      // 2. If Regex used the fallback, try NLP for a better result
+      if (transformedTitle.startsWith('Your mother is responsible for:')) {
+         const nlpTitle = funnyGenerator.transformHeadline(headline.title);
+         // If NLP changed it, use that instead
+         if (nlpTitle !== headline.title) {
+             transformedTitle = nlpTitle;
+         }
+      }
+
+      // 3. Generate Funny Summary
+      const summaryText = headline.contentSnippet || headline.summary || headline.content || "";
+      const funnySummary = funnyGenerator.transformSummary(summaryText);
+
+      return {
+        original: headline,
+        transformed: transformedTitle,
+        funnySummary: funnySummary,
+        suitable: isSuitable
+      };
+    });
     lastFetch = Date.now();
     console.log(`Fetched ${cachedHeadlines.length} headlines`);
   } catch (error) {

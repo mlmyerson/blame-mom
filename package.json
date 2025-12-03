@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
+    "dev": "node build-static.js && npm run dev --prefix app",
+    "server": "node server.js",
     "test": "jest",
     "build": "node build-static.js && cd app && npm install && npm run build"
   },
@@ -19,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.13.2",
+    "compromise": "^14.14.4",
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
     "rss-parser": "^3.13.0"

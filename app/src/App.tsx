@@ -107,7 +107,7 @@ function App() {
                 <article className="article-card hero">
                   <h2 className="headline-transformed">{heroHeadline.transformed}</h2>
                   <p className="kicker">EXCLUSIVE REPORT</p>
-                  <p className="summary">{heroHeadline.original.summary || heroHeadline.original.description}</p>
+                  <p className="summary">{heroHeadline.funnySummary || heroHeadline.original.summary || heroHeadline.original.description}</p>
                   <p className="original">
                     Original: {heroHeadline.original.title} ({heroHeadline.original.source})
                   </p>
