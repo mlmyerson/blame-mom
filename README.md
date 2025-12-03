@@ -33,34 +33,23 @@ cd blame-mom
 2. Install dependencies:
 ```bash
 npm install
-
-# Install the React/Vite frontend dependencies
-npm install --prefix app
 ```
 
-No API keys or configuration files are required—the app ships with RSS feeds from BBC, Reuters, NPR, and AP baked in.
-
-3. Start both the Express API (port 3000) and the Vite dev server (port 5173) with a single command:
+3. Start the server:
 ```bash
-npm run dev
+npm start
 ```
 
-That script runs the API and the Vite dev server concurrently. Open the app at:
+4. Open your browser and navigate to:
 ```
-http://localhost:5173
+http://localhost:3000
 ```
-
-For production builds, compile the frontend once with:
-```bash
-npm run build
-```
-The Express server will automatically serve the generated files from `app/dist`.
 
 ## Usage
 
 ### Web Interface
 
-Visit the React app (either the Vite dev server during development or the Express server after building) and use the buttons to fetch data. For debugging purposes, the UI simply dumps the headline text, summary, and transformed output in plain text. "Generate New Headline" requests one random entry, while "All Headlines" loads a batch.
+Simply visit the homepage and click "Generate New Headline" to see a random transformed headline. You can also view all available headlines at once.
 
 ### API Endpoints
 
@@ -109,21 +98,18 @@ npm test
 
 ```
 blame-mom/
-├── server.js               # Express server and API routes
-├── headlineTransformer.js  # Core transformation logic
-├── newsFetcher.js          # RSS feed fetching
-├── app/                    # React + Vite frontend
-│   ├── src/                # React components, styles, hooks
-│   ├── public/             # Static assets for Vite build
-│   └── vite.config.ts      # Vite configuration with API proxy
-├── public/                 # Legacy static fallback (used if React build is missing)
-├── package.json            # Backend dependencies and helper scripts
-└── README.md               # Documentation
+├── server.js              # Express server and API routes
+├── headlineTransformer.js # Core transformation logic
+├── newsFetcher.js        # RSS feed fetching
+├── public/
+│   └── index.html        # Web interface
+├── package.json          # Dependencies and scripts
+└── README.md            # Documentation
 ```
 
 ## How It Works
 
-1. **News Fetching**: The `newsFetcher.js` module pulls from a curated list of RSS feeds (BBC, Reuters, NPR, AP, etc.), normalizes each item, and deduplicates the results.
+1. **News Fetching**: The `newsFetcher.js` module periodically fetches headlines from RSS feeds of trustworthy news sources.
 
 2. **Transformation**: The `headlineTransformer.js` module uses pattern matching to:
    - Identify the structure of the headline

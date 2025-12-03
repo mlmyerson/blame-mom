@@ -1,0 +1,175 @@
+{
+  "generatedAt": "2025-12-03T20:25:23.357Z",
+  "count": 13,
+  "headlines": [
+    {
+      "original": {
+        "title": "UK government withheld information from Harry Dunn's family after his death, report says",
+        "summary": "Dame Anne Owers issues a report into the government's response to Mr Dunn's death outside a US base.",
+        "description": "Dame Anne Owers issues a report into the government's response to Mr Dunn's death outside a US base.",
+        "link": "https://www.bbc.com/news/articles/c80xk5vnpr8o?at_medium=RSS&at_campaign=rss",
+        "source": "BBC News",
+        "category": "world",
+        "publishedAt": "2025-12-03T14:22:25.000Z"
+      },
+      "transformed": "UK government withheld information from Harry Dunn's family after his death, reports that your mother is responsible for says.",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Racism, rape and death threats: One weekend of social media abuse in football",
+        "summary": "More than 2,000 extremely abusive social media posts were sent about managers and players in the Premier League and Women's Super League in a single weekend, a BBC investigation finds.",
+        "description": "More than 2,000 extremely abusive social media posts were sent about managers and players in the Premier League and Women's Super League in a single weekend, a BBC investigation finds.",
+        "link": "https://www.bbc.com/sport/football/articles/c4g98zkx518o?at_medium=RSS&at_campaign=rss",
+        "source": "BBC News",
+        "category": "world",
+        "publishedAt": "2025-12-03T06:22:31.000Z"
+      },
+      "transformed": "Your mother is responsible for: Racism, rape and death threats: One weekend of social media abuse in football",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Crisis looms in Israel over ultra-Orthodox conscription bill",
+        "summary": "Lawmakers are considering a draft bill to end the exemption granted to ultra-Orthodox men enrolled in full-time religious study.",
+        "description": "Lawmakers are considering a draft bill to end the exemption granted to ultra-Orthodox men enrolled in full-time religious study.",
+        "link": "https://www.bbc.com/news/articles/cly580gkd9ro?at_medium=RSS&at_campaign=rss",
+        "source": "BBC News",
+        "category": "world",
+        "publishedAt": "2025-12-03T06:06:49.000Z"
+      },
+      "transformed": "Your mother is responsible for: Crisis looms in Israel over ultra-Orthodox conscription bill",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Warning over cosmetic face fillers as scans reveal new details of risks",
+        "summary": "Placed incorrectly, cosmetic dermal fillers can damage nearby ateries, leading to to skin loss and even blindness, experts warn.",
+        "description": "Placed incorrectly, cosmetic dermal fillers can damage nearby ateries, leading to to skin loss and even blindness, experts warn.",
+        "link": "https://www.bbc.com/news/articles/c773n331055o?at_medium=RSS&at_campaign=rss",
+        "source": "BBC News",
+        "category": "world",
+        "publishedAt": "2025-12-03T10:16:53.000Z"
+      },
+      "transformed": "Your mother is responsible for: Warning over cosmetic face fillers as scans reveal new details of risks",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Delhi records 200,000 acute respiratory illness cases amid toxic air",
+        "summary": "More than 30,000 people with respiratory illnesses had to be hospitalised in Delhi between 2022 and 2024.",
+        "description": "More than 30,000 people with respiratory illnesses had to be hospitalised in Delhi between 2022 and 2024.",
+        "link": "https://www.bbc.com/news/articles/cp39q5n5037o?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-12-03T06:53:17.000Z"
+      },
+      "transformed": "Your mother is responsible for: Delhi records 200,000 acute respiratory illness cases amid toxic air",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "I have high levels of forever chemicals in my blood - what can I do about it?",
+        "summary": "The chemicals would \"most likely\" impact my health, but there are ways to bring levels down, I was told.",
+        "description": "The chemicals would \"most likely\" impact my health, but there are ways to bring levels down, I was told.",
+        "link": "https://www.bbc.com/news/articles/ce8z8pv1e0ko?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-12-01T06:04:18.000Z"
+      },
+      "transformed": "Your mother is responsible for: I have high levels of forever chemicals in my blood - what can I do about it?",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Brazil's Amazon rainforest at risk as key protection under threat",
+        "summary": "Brazilian farmers want to end a ban on planting soya on cleared land, which critics say would spur deforestation.",
+        "description": "Brazilian farmers want to end a ban on planting soya on cleared land, which critics say would spur deforestation.",
+        "link": "https://www.bbc.com/news/articles/cwypzdgwg1yo?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-11-17T01:10:54.000Z"
+      },
+      "transformed": "Your mother is responsible for: Brazil's Amazon rainforest at risk as key protection under threat",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Foul skies, fading light: How air pollution is stealing India's sunshine",
+        "summary": "India’s sunshine hours have fallen over the past 30 years due to clouds, aerosols and local weather.",
+        "description": "India’s sunshine hours have fallen over the past 30 years due to clouds, aerosols and local weather.",
+        "link": "https://www.bbc.com/news/articles/cr5qygr6d5yo?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-10-13T23:06:44.000Z"
+      },
+      "transformed": "Your mother is responsible for: Foul skies, fading light: How air pollution is stealing India's sunshine",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Death toll in Indonesia floods passes 600",
+        "summary": "Another 500 people are missing, while thousands more have been injured after a cyclone hit the region.",
+        "description": "Another 500 people are missing, while thousands more have been injured after a cyclone hit the region.",
+        "link": "https://www.bbc.com/news/articles/c4g4enlp6kzo?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-12-02T07:10:41.000Z"
+      },
+      "transformed": "Your mother is responsible for: Death toll in Indonesia floods passes 600",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Britain's energy bills problem - and why firms are paid huge sums to stop producing power",
+        "summary": "Could the government's radical plan to change the way the UK distributes electricity really bring down bills - or just lead to a postcode lottery?",
+        "description": "Could the government's radical plan to change the way the UK distributes electricity really bring down bills - or just lead to a postcode lottery?",
+        "link": "https://www.bbc.com/news/articles/cdedjnw8e85o?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-10-29T09:14:11.000Z"
+      },
+      "transformed": "Your mother is responsible for: Britain's energy bills problem - and why firms are paid huge sums to stop producing power",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Melting glaciers threaten to wipe out European villages - is the steep cost to protect them worth it?",
+        "summary": "Switzerland spends almost $500m a year on protective structures. Is it worth it - or, as some suggest, should people move away from the mountain villages at risk?",
+        "description": "Switzerland spends almost $500m a year on protective structures. Is it worth it - or, as some suggest, should people move away from the mountain villages at risk?",
+        "link": "https://www.bbc.com/news/articles/cj4w9ggzxv4o?at_medium=RSS&at_campaign=rss",
+        "source": "BBC Science",
+        "category": "science",
+        "publishedAt": "2025-08-02T23:06:56.000Z"
+      },
+      "transformed": "Your mother is responsible for: Melting glaciers threaten to wipe out European villages - is the steep cost to protect them worth it?",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "Pentagon watchdog finds Hegseth risked the safety of U.S. forces with use of Signal",
+        "summary": "A forthcoming inspector general report finds that had intel shared by Hegseth been intercepted by an adversary, it would have endangered servicemembers, according to a source who viewed the findings.",
+        "description": "A forthcoming inspector general report finds that had intel shared by Hegseth been intercepted by an adversary, it would have endangered servicemembers, according to a source who viewed the findings.",
+        "link": "https://www.npr.org/2025/12/03/nx-s1-5630519/signalgate-pete-hegseth-inspector-general-report",
+        "source": "NPR News",
+        "category": "news",
+        "publishedAt": "2025-12-03T20:19:25.000Z"
+      },
+      "transformed": "Your mother is responsible for: Pentagon watchdog finds Hegseth risked the safety of U.S. forces with use of Signal",
+      "suitable": true
+    },
+    {
+      "original": {
+        "title": "One year on from martial law crisis, South Korea celebrates its democracy's resilience",
+        "summary": "One year on from failed presidential power grab, South Korea celebrates its resilient democracy, and tries to heal deep political divisions.",
+        "description": "One year on from failed presidential power grab, South Korea celebrates its resilient democracy, and tries to heal deep political divisions.",
+        "link": "https://www.npr.org/2025/12/03/g-s1-100226/south-korea-martial-law-crisis-anniversary",
+        "source": "NPR News",
+        "category": "news",
+        "publishedAt": "2025-12-03T12:37:36.000Z"
+      },
+      "transformed": "Your mother is responsible for: One year on from martial law crisis, South Korea celebrates its democracy's resilience",
+      "suitable": true
+    }
+  ]
+}
